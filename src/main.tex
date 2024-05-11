@@ -1,0 +1,78 @@
+\documentclass[crop,border=2pt,tikz]{standalone}
+\usepackage{fontspec}%\setmainfont{Arial}
+\usepackage{pgfplots}
+ \usepgfplotslibrary{groupplots}
+\pgfplotsset{
+	compat=newest,
+	compat/show suggested version = false,
+}
+\begin{document}%
+\begin{tikzpicture}%
+	\begin{groupplot}[%
+			group style={
+				group size=2 by 1,
+				horizontal sep=2cm
+			},
+			cycle list={%
+				blue, red, teal, orange, purple, magenta, violet, black, cyan, magenta
+			},
+			every axis plot post/.append style={%
+				mark=none,
+				line width=0.5pt
+				},
+				xmin=-15,xmax=15,ymin=-0.7, ymax=1.3,
+				xtick=\empty,
+				extra x ticks={-15, -10, -5, 0, 5, 10, 15},
+				extra x tick labels={$-15$,$-10$, $-5$, $0$, $5$, $10$, $15$},
+				ytick=\empty,
+				extra y ticks={-0.5, 0, 0.5, 1.0},
+				extra y tick labels={$-0.5$, $0$, $0.5$, $1.0$},
+			]
+		\nextgroupplot[xlabel={$x$},ylabel={$J_n(x)$}]
+		\draw[ultra thin](\pgfkeysvalueof{/pgfplots/xmin},0)--(\pgfkeysvalueof{/pgfplots/xmax},0);
+		\addplot table{../data/Bessel_00th.txt};
+		\addplot table{../data/Bessel_01th.txt};
+		\addplot table{../data/Bessel_02th.txt};
+		\addplot table{../data/Bessel_03th.txt};
+		\addplot table{../data/Bessel_04th.txt};
+		%\addplot table{../data/Bessel_05th.txt};
+		%\addplot table{../data/Bessel_06th.txt};
+		%\addplot table{../data/Bessel_07th.txt};
+		%\addplot table{../data/Bessel_08th.txt};
+		%\addplot table{../data/Bessel_09th.txt};
+		\addplot table{../data/Bessel_10th.txt};
+		\node[anchor=south west,xshift=-0.9cm]at(0,1){%
+			$n=$
+			\textcolor{blue}{$0$}$,$
+			\textcolor{red}{$1$}$,$
+			\textcolor{teal}{$2$}$,$
+			\textcolor{orange}{$3$}$,$
+			\textcolor{purple}{$4$}$,\cdots,$
+			\textcolor{magenta}{$10$}
+		};
+		
+		\nextgroupplot[%
+				ymin=0, ymax=1.2,
+				ytick=\empty,
+				extra y ticks={0, 0.25, 0.5, 0.75,1.0},
+				extra y tick labels={$0$,$0.25$,$0.5$,$0.75$,$1.0$},
+				xlabel={$x$},ylabel={$\left|J_n(x)\right|^2$}
+			]
+		\addplot table[ x index=0, y expr=\thisrowno{1}^2 ]{../data/Bessel_00th.txt};
+		\addplot table[ x index=0, y expr=\thisrowno{1}^2 ]{../data/Bessel_01th.txt};
+		\addplot table[ x index=0, y expr=\thisrowno{1}^2 ]{../data/Bessel_02th.txt};
+		\addplot table[ x index=0, y expr=\thisrowno{1}^2 ]{../data/Bessel_03th.txt};
+		\addplot table[ x index=0, y expr=\thisrowno{1}^2 ]{../data/Bessel_04th.txt};
+		\addplot table[ x index=0, y expr=\thisrowno{1}^2 ]{../data/Bessel_10th.txt};
+		\node[anchor=south west,xshift=-0.9cm]at(0,1){%
+			$n=$
+			\textcolor{blue}{$0$}$,$
+			\textcolor{red}{$1$}$,$
+			\textcolor{teal}{$2$}$,$
+			\textcolor{orange}{$3$}$,$
+			\textcolor{purple}{$4$}$,\cdots,$
+			\textcolor{magenta}{$10$}
+		};
+	\end{groupplot}%
+\end{tikzpicture}%
+\end{document}%
